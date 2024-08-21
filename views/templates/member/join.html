@@ -70,9 +70,13 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jsondata)  // 전송할 데이터
+            body: JSON.stringify(jsondata),  // 전송할 데이터
                                         // 문자열을 json으로 변환
-        })
-    });
+            redirect: 'follow'  // 서버 응답시 처리방식 지정 (follow: 서버에서 보내주는 대로 따르겠다)
+        }).then((res) => {
+            if (res.redirected) location.href = res.url;
+            // 서버에서 응답해 준 url로 이동 (서버에서 응답이 오면 넘어온 주소대로 이동하겠다)
+        }); //fetch
+    }); //addEventListener
 </script>
 {% endblock %}
