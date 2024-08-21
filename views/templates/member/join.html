@@ -22,7 +22,7 @@
                     </div>
                 <div class="row my-2"><label for="repasswd" class="col-form-label col-4 text-end">비밀번호 확인</label>
                     <div class="col-7">
-                        <input type="passwod" name="repasswd" id="repasswd"
+                        <input type="password" name="repasswd" id="repasswd"
                            minlength="6"  maxlength="16" required class="form-control"></div>
                     </div>
                 <div class="row my-2"><label for="name" class="col-form-label col-4 text-end">이름</label>
@@ -50,7 +50,41 @@
     let joinbtn = document.querySelector('#joinbtn');
     let joinfrm = document.joinfrm;
 
+    // 회원 가입 폼 체크 함수
+    let checkjoinfrm = (frm) => {
+        if (frm.userid.value === '') {
+            alert('아이디를 입력하세요!');
+            frm.userid.focus();
+            return false;
+        } else if (frm.passwd.value === '') {
+            alert('비밀번호를 입력하세요!');
+            frm.passwd.focus();
+            return false;
+        } else if (frm.repasswd.value === '') {
+            alert('비밀번호확인을 입력하세요!');
+            frm.repasswd.focus();
+            return false;
+        } else if (frm.repasswd.value !== frm.passwd.value) {
+            alert('비밀번호가 일치하지 않습니다.!');
+            frm.repasswd.focus();
+            return false;
+        } else if (frm.name.value === '') {
+            alert('이름을 입력하세요!');
+            frm.name.focus();
+            return false;
+        } else if (frm.email.value === '') {
+            alert('이메일을 입력하세요!');
+            frm.email.focus();
+            return false;
+        }else {
+            return true;
+        }
+    };
+
     joinbtn.addEventListener('click', () => {
+        // 회원정보 입력 여부 검사
+        if (!checkjoinfrm(joinfrm)) return;
+
         // 폼에 입력된 회원 정보를 초기화함
         const formData = new FormData(joinfrm);
         console.log(formData);
