@@ -9,10 +9,12 @@
             <h2>회원정보</h2>
             <div class="d-flex justify-content-center align-items-center" style="height:65vh">
                 <table class="table w-25 table-bordered table-striped">
-                <tr><td>아이디</td><td>dsfsf</td></tr>
-                <tr><td>이름</td><td>sdfsf</td></tr>
-                <tr><td>이메일</td><td>dsfsf</td></tr>
-                <tr><td>가입일</td><td>df</td></tr>
+                {% for m in myinfo %}
+                <tr><td>아이디</td><td>{{ m.userid }}</td></tr>
+                <tr><td>이름</td><td>{{ m.name }}</td></tr>
+                <tr><td>이메일</td><td>{{ m.email }}</td></tr>
+                <tr><td>가입일</td><td>{{ m.regdate.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+                {% endfor %}
             </table>
             </div>
         </main>
