@@ -17,7 +17,7 @@
     thead td:last-child { text-align: right }
     select, input, button { padding: 5px }
     button { padding: 4px 5px }
-    .pagnation { width: 550px; margin: 0 auto; }
+    .pagnation { width: 600px; margin: 0 auto; }
     div > ul { list-style: none; padding: 0;}
     div > ul li { display: inline; padding: 0 15px }
     .cpg { color: red; font-size: 30px; font-weight: bold }
@@ -70,8 +70,21 @@
     </table>
     <div class="pagnation">
         <ul>
-            <li>이전</li><li>1</li><li>2</li><li>3</li><li>4</li><li class="cpg">5</li>
-            <li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>다음</li>
+            <li>
+                {% if cpg > 1 %}
+                <a href="/board/list/{{ cpg - 1 }}">이전</a>
+                {% else %}
+                이전
+                {% endif %}
+            </li>
+            {% for idx in range(11, 21) %}
+                {% if cpg != idx %}
+                <li><a href="/board/list/{{ idx }}">{{ idx }}</a></li>
+                {% else  %}
+                <li class="cpg">{{ idx }}</li>
+                {% endif %}
+            {% endfor %}
+            <li><a href="/board/list/{{ cpg + 1 }}">다음</a></li>
         </ul>
     </div>
 </main>
