@@ -77,7 +77,7 @@
                 이전
                 {% endif %}
             </li>
-            {% for idx in range(11, 21) %}
+            {% for idx in range(stpgb, stpgb + 10) %}
                 {% if cpg != idx %}
                 <li><a href="/board/list/{{ idx }}">{{ idx }}</a></li>
                 {% else  %}
