@@ -57,30 +57,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td><td><a href="/board/view?bid=1">시간은 금이라구, 친구!</a></td>
-            <td>dangdang</td><td>2024.07.30</td><td>123</td>
-        </tr>
-        <tr>
-            <td>2</td><td>알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!알았다네, 친구!</td>
-            <td>dangdang</td><td>2024.07.30</td><td>56</td>
-        </tr>
-        <tr>
-            <td>3</td><td>시간은 금이라구, 친구!</td>
-            <td>dangdang</td><td>2024.07.30</td><td>123</td>
-        </tr>
-        <tr>
-            <td>4</td><td>시간은 금이라구, 친구!</td>
-            <td>dangdang</td><td>2024.07.30</td><td>123</td>
-        </tr>
-        <tr>
-            <td>5</td><td>시간은 금이라구, 친구!</td>
-            <td>dangdang</td><td>2024.07.30</td><td>123</td>
-        </tr>
-        <tr>
-            <td>6</td><td>시간은 금이라구, 친구!</td>
-            <td>dangdang</td><td>2024.07.30</td><td>123</td>
-        </tr>
+            {% for bd in bdlist %}
+            <tr>
+                <td>{{ bd.bno }}</td>
+                <td><a href="/board/view/{{ bd.bno }}">{{ bd.title }}</a></td>
+                <td>{{ bd.userid }}</td>
+                <td>{{ bd.regdate.strftime('%Y-%m-%d') }}</td>
+                <td>{{ bd.views }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
     <div class="pagnation">

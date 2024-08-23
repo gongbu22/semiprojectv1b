@@ -16,7 +16,7 @@ async def list(req: Request, db: Session = Depends(get_db)):
         bdlist = BoardService.select_board(db)
         print(bdlist)
 
-        return templates.TemplateResponse('board/list.html', {'request': req})
+        return templates.TemplateResponse('board/list.html', {'request': req, 'bdlist': bdlist})
 
     except Exception as ex:
         print(f'▷▷▷ list 오류 발생 : {str(ex)}')
