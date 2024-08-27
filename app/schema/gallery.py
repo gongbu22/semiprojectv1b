@@ -14,4 +14,4 @@ class NewGallery(BaseModel):
     userid: str
     title: str
     contents: str
-    # captcha: str
+    captcha: str
