@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List
 
 from fastapi import APIRouter, Request, UploadFile, File
@@ -13,7 +14,7 @@ gallery_router = APIRouter()
 templates = Jinja2Templates(directory='views/templates')
 
 @gallery_router.get('/list/{cpg}', response_class=HTMLResponse)
-async def list(req: Request, cpg: int, db: Session = Depends(get_db)):
+async def glist(req: Request, cpg: int, db: Session = Depends(get_db)):
     try:
         galist = GalleryService.select_gallery(cpg, db)
 
@@ -47,10 +48,15 @@ async def writeok(req: Request, gallery: NewGallery = Depends(get_gallery_data),
 async def view(req: Request, gno: int, db: Session = Depends(get_db)):
     try:
         # sql문을 두개 작성하고 값을 2개 가져온다. 그래서 rs1 과 rs2
-        rs1, rs2 = GalleryService.selectone_gallery(gno, db)
+        rows = GalleryService.selectone_gallery(gno, db)
+
+        gallery_dict = defaultdict(list)
+        for row in rows:
+            gallery, gal_attach = row
+            gallery_dict[gallery].append(gal_attach)
 
         return templates.TemplateResponse('gallery/view.html',
-                                          {'request': req, 'gallery': rs1, 'galattach': rs2})
+                                          {'request': req, 'galleries': gallery_dict.items()})
     except Exception as ex:
         print(f'▷▷▷ view 오류발생 {str(ex)}')
         return RedirectResponse('member/error.html', 303)
