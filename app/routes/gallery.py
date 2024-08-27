@@ -43,6 +43,14 @@ async def writeok(req: Request, gallery: NewGallery = Depends(get_gallery_data),
         return RedirectResponse('member/error.html', 303)
 
 
-@gallery_router.get('/view', response_class=HTMLResponse)
-async def view(req: Request):
-    return templates.TemplateResponse('gallery/view.html', {'request': req})
+@gallery_router.get('/view/{gno}', response_class=HTMLResponse)
+async def view(req: Request, gno: int, db: Session = Depends(get_db)):
+    try:
+        # sql문을 두개 작성하고 값을 2개 가져온다. 그래서 rs1 과 rs2
+        rs1, rs2 = GalleryService.selectone_gallery(gno, db)
+
+        return templates.TemplateResponse('gallery/view.html',
+                                          {'request': req, 'gallery': rs1, 'galattach': rs2})
+    except Exception as ex:
+        print(f'▷▷▷ view 오류발생 {str(ex)}')
+        return RedirectResponse('member/error.html', 303)
