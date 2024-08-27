@@ -59,9 +59,10 @@
         e.preventDefault();
 
         // captcha 클릭 안하면
-        if (grecaptcha.getResponse() === '')
+        if (grecaptcha.getResponse() === '') {
             alert('자동가입방지를 클릭하세요!');
-            return
+            return;
+        }
 
         const formData = new FormData(galleryfrm);
         // multipart 형식으로 전송해야 하기 때문에
@@ -70,7 +71,10 @@
 
         await fetch('/gallery/write', {  // 다중데이터 보낼땐 그냥 formData만 보냄
             method: 'POST',
-            body: formData
+            body: formData,
+            redirect: 'follow'
+        }).then((res) => {
+            if (res.redirected) location.href = res.url;
         });
     });
 </script>
