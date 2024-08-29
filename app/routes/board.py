@@ -22,6 +22,7 @@ templates = Jinja2Templates(directory='views/templates')
 # 현재페이지에 따라 보여줄 페이지 블록 결정
 # ex) 총 페이지수 : 27일때
 # => select count(bno) 총게시글수, ceil(count(bno)/25) 총페이지수 from board;
+
 # cpg = 1: 1 2 3 4 5 6 7 8 9 10
 # cpg = 3: 1 2 3 4 5 6 7 8 9 10
 # cpg = 9: 1 2 3 4 5 6 7 8 9 10
@@ -29,6 +30,15 @@ templates = Jinja2Templates(directory='views/templates')
 # cpg = 17: 11 12 13 14 15 16 17 18 19 20
 # cpg = 23: 21 22 23 24 25 26 27
 # startpage(stpgb) = ((cpg - 1) / 10) * 10 + 1
+
+# 게시판 댓글 처리 : reply
+# 댓글번호   댓글내용    작성자     작성일    부모글번호   부모댓글번호
+# 1         헬로우염      123abc  20210611    100      1
+# 4       왜영어로인사...  xyz987  20210611    100      1
+# 2         방가방가     abc123  20210611    100       2
+# 3         안녕하세요    xyz987  20210611    100      3
+#
+# => 댓글 출력 순서는 부모글번호로 추려낸후 부모댓글번호로 정렬
 
 @board_router.get('/list/{cpg}', response_class=HTMLResponse)
 async def list(req: Request, cpg: int,  db: Session = Depends(get_db)):
