@@ -27,12 +27,12 @@
 <main>
     <h2>게시판 본문보기</h2>
     <table>
-        <tr><th>제 목</th><td>시간은 금이라구 제목</td></tr>
-        <tr><th>작성자</th><td>dangdang</td></tr>
-        <tr><th>작성일</th><td>2024-07-30 15:17:50</td></tr>
+        <tr><th>제 목</th><td>{{ boards.title }}</td></tr>
+        <tr><th>작성자</th><td>{{ boards.userid }}</td></tr>
+        <tr><th>작성일</th><td>{{ boards.regdate }} ({{ boards.views }})</td></tr>
         <tr>
             <th>본문</th>
-            <td><textarea rows="20" cols="50">시간은 친구라구 내용</textarea></td>
+            <td><textarea rows="20" cols="50">{{ boards.contents }}</textarea></td>
         </tr>
         <tr><td colspan="2">
             <button type="button" id="listbtn" onclick="location.href='/board/list'">리스트로</button>
