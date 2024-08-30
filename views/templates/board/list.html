@@ -76,19 +76,27 @@
         <ul>
             <li>
                 {% if cpg > 1 %}
-                <a href="/board/list/{{ cpg - 1 }}">이전</a>
+                    <a href="/board/list/{{ cpg - 1 }}">이전</a>
                 {% else %}
-                이전
+                    이전
                 {% endif %}
             </li>
             {% for idx in range(stpgb, stpgb + 10) %}
-                {% if cpg != idx %}
-                <li><a href="/board/list/{{ idx }}">{{ idx }}</a></li>
-                {% else  %}
-                <li class="cpg">{{ idx }}</li>
+                {% if idx <= allpage %} {# idx가 allpage 보다 같거나 작으면 페이지네이션 출력 #}
+                    {% if cpg != idx %}
+                    <li><a href="/board/list/{{ idx }}">{{ idx }}</a></li>
+                    {% else  %}
+                    <li class="cpg">{{ idx }}</li>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
-            <li><a href="/board/list/{{ cpg + 1 }}">다음</a></li>
+
+            {% if cpg < allpage %} {# 현재페이지가 allpage보다 작으면 링크가 있는 다음 출력 #}
+                <li><a href="/board/list/{{ cpg + 1 }}">다음</a></li>
+            {% else %}
+                <li>다음</li>
+            {% endif %}
+
         </ul>
     </div>
 </main>
