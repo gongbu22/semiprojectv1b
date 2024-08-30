@@ -23,7 +23,8 @@ class Reply(Base):
     rno: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     reply: Mapped[str] = mapped_column(index=True)
     userid: Mapped[str] = mapped_column(ForeignKey('member.userid'), index=True) # 비식별관계     member.userid에 unique와 not null 을 주면 식별관계가 됨
-    regdate: Mapped[datetime] = mapped_column(default=datetime.now)
+    # regdate: Mapped[datetime] = mapped_column(default=datetime.now)
+    regdate: Mapped[datetime] = mapped_column(default=lambda: datetime.now().replace(microsecond=0))
     bno: Mapped[int] = mapped_column(ForeignKey('board.bno'))
     rpno: Mapped[int] = mapped_column(ForeignKey('reply.rno'))
     board = relationship('Board', back_populates='replys')
