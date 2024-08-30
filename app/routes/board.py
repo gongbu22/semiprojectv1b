@@ -52,7 +52,8 @@ async def list(req: Request, cpg: int,  db: Session = Depends(get_db)):
 
         return templates.TemplateResponse('board/list.html',
                         {'request': req, 'bdlist': bdlist,
-                         'cpg': cpg, 'stpgb': stpgb, 'allpage': allpage})
+                         'cpg': cpg, 'stpgb': stpgb, 'allpage': allpage,
+                         'baseurl': '/board/list/'})
 
     except Exception as ex:
         print(f'▷▷▷ list 오류 발생 : {str(ex)}')
@@ -83,10 +84,13 @@ async def find(req: Request, ftype: str, fkey: str,
                cpg: int,  db: Session = Depends(get_db)):
     try:
         stpgb = int((cpg - 1) / 10) * 10 + 1
-        bdlist = BoardService.find_select_board(db, ftype, '%'+fkey+'%', cpg)
+        bdlist, cnt = BoardService.find_select_board(db, ftype, '%'+fkey+'%', cpg)
+        allpage = ceil(cnt / 25)
 
         return templates.TemplateResponse('board/list.html',
-                                          {'request': req, 'bdlist': bdlist, 'cpg': cpg, 'stpgb': stpgb})
+                                          {'request': req, 'bdlist': bdlist,
+                                           'cpg': cpg, 'stpgb': stpgb, 'allpage': allpage,
+                                           'baseurl': f'/board/list/{ftype}/{fkey}/'})
 
     except Exception as ex:
         print(f'▷▷▷ find 오류 발생 : {str(ex)}')
